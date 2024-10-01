@@ -21,19 +21,14 @@ li_list = soup.find_all("li", class_="ListItem-c11n-8-84-3-StyledListCardWrapper
 apartments_list = []
 
 
-def add_new_record(app):
-    link_tag = app.find(class_="StyledPropertyCardDataArea-anchor")
-    app_link = link_tag["href"]
-    app_address = link_tag.find("address").text.strip()
-    app_address = app_address.replace(" | ", " ")
-    app_price = app.find(class_="PropertyCardWrapper__StyledPriceLine").text
-    app_price = app_price.replace(",", "").replace("+", "").replace("/mo", "").replace("1 bd", "").replace("1bd", "")
-    app_price = app_price.strip()
-    apartments_list.append({"link": app_link, "address": app_address, "price": app_price})
-
-
 for aprtm in li_list:
-    add_new_record(aprtm)
+    link_tag = aprtm.find(class_="StyledPropertyCardDataArea-anchor")
+    app_link = link_tag["href"]
+    app_address = link_tag.find("address").text
+    app_address = app_address.replace(" | ", " ").strip()
+    aprtm_price = aprtm.find(class_="PropertyCardWrapper__StyledPriceLine").text
+    aprtm_price = aprtm_price.replace(",", "").replace("+", "").replace("/mo", "").replace("1 bd", "").replace("1bd", "").strip()
+    apartments_list.append({"link": app_link, "address": app_address, "price": aprtm_price})
 
 print(apartments_list)
 
